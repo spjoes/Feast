@@ -18,13 +18,6 @@ public class ModBlocks {
 
     public static final Block CUTTING_BOARD = register("cutting_board", CuttingBoardBlock::new, AbstractBlock.Settings.create().strength(2.5F, 2.5F).nonOpaque().sounds(BlockSoundGroup.WOOD));
 
-
-
-//    public static Block registerBlock(String name, Function<Block.Settings, Block> factory, Block.Settings settings) {
-//        final RegistryKey<Block> registerKey = RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(Feast.MOD_ID, name));
-//        return Blocks.register(registerKey, factory, settings);
-//    }
-
     public static Block register(RegistryKey<Block> key, Function<AbstractBlock.Settings, Block> factory, AbstractBlock.Settings settings) {
         Block block = (Block)factory.apply(settings.registryKey(key));
         return (Block)Registry.register(Registries.BLOCK, key, block);
@@ -36,9 +29,5 @@ public class ModBlocks {
 
     private static Block register(String id, Function<AbstractBlock.Settings, Block> factory, AbstractBlock.Settings settings) {
         return register(RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(Feast.MOD_ID, id)), factory, settings);
-    }
-
-    public static void registerModBlocks() {
-
     }
 }

@@ -1,6 +1,7 @@
 package dev.persn;
 
 import dev.persn.item.ModItems;
+import dev.persn.util.ModLootTableModifiers;
 import dev.persn.villager.ModTrades;
 import dev.persn.villager.ModVillagersNew;
 import net.fabricmc.api.ModInitializer;
@@ -26,5 +27,6 @@ public class Feast implements ModInitializer {
 		ModItems.registerModItems();
 		ModVillagersNew.registerVillagers();
 		ModTrades.registerTrades();
+		ModLootTableModifiers.modifyLootTables();
 	}
 }

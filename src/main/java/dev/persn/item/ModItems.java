@@ -19,7 +19,7 @@ import java.util.function.Function;
 
 public class ModItems {
 
-    //Items
+    //Food Components
     public static final FoodComponent RICE_FOOD_COMPONENT = new FoodComponent.Builder()
             .nutrition(2)
             .saturationModifier(0.3F)
@@ -28,8 +28,19 @@ public class ModItems {
             .nutrition(6)
             .saturationModifier(0.8F)
             .build();
+    public static final FoodComponent SHRIMP_FOOD_COMPONENT = new FoodComponent.Builder()
+            .nutrition(2)
+            .saturationModifier(0.1F)
+            .build();
+    public static final FoodComponent COOKED_SHRIMP_FOOD_COMPONENT = new FoodComponent.Builder()
+            .nutrition(5)
+            .saturationModifier(0.6F)
+            .build();
 
+    //Items
     public static final Item SUSHI_ITEM = registerItem("sushi", Item::new, new Item.Settings().food(SUSHI_FOOD_COMPONENT));
+    public static final Item SHRIMP_ITEM = registerItem("shrimp", Item::new, new Item.Settings().food(SHRIMP_FOOD_COMPONENT));
+    public static final Item COOKED_SHRIMP_ITEM = registerItem("cooked_shrimp", Item::new, new Item.Settings().food(COOKED_SHRIMP_FOOD_COMPONENT));
 
     //Block Items
     public static final Item RICE_CROP_ITEM = registerItem("rice_crop", settings -> new BlockItem(ModBlocks.RICE_CROP, settings), new Item.Settings().food(RICE_FOOD_COMPONENT));
@@ -43,19 +54,20 @@ public class ModItems {
     }
 
     private static void customFoodAndDrink(FabricItemGroupEntries entries) {
-        // Add custom ingredients to the ingredients tab
+        // Add custom ingredients to the "Food & Drink" tab
         entries.add(RICE_CROP_ITEM);
         entries.add(SUSHI_ITEM);
+        entries.add(SHRIMP_ITEM);
+        entries.add(COOKED_SHRIMP_ITEM);
     }
-    private static void customBuildingBlocks(FabricItemGroupEntries entries) {
-        // Add custom ingredients to the ingredients tab
+    private static void customFunctional(FabricItemGroupEntries entries) {
+        // Add custom ingredients to the "Functional" tab
         entries.add(CUTTING_BOARD_ITEM);
     }
 
     public static void registerModItems() {
-        // Register items here
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(ModItems::customFoodAndDrink);
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register(ModItems::customBuildingBlocks);
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register(ModItems::customFunctional);
     }
 
 }
