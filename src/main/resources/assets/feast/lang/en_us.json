@@ -4,7 +4,10 @@
   "item.feast.shrimp": "Raw Shrimp",
   "item.feast.cooked_shrimp": "Cooked Shrimp",
   "item.feast.cutting_board": "Cutting Board",
+  "item.feast.stove": "Stove",
+  "item.feast.stove_pot": "Stove Pot",
   "block.feast.rice_crop": "Rice Patty",
   "block.feast.cutting_board": "Cutting Board",
+  "block.feast.stove": "Stove",
   "entity.minecraft.villager.faraway_traveler": "Faraway Traveler"
 }

@@ -2,7 +2,9 @@
 	"required": true,
 	"package": "dev.persn.mixin.client",
 	"compatibilityLevel": "JAVA_21",
-	"client": [],
+	"client": [
+		"HeldItemRendererMixin"
+	],
 	"injectors": {
 		"defaultRequire": 1
 	}

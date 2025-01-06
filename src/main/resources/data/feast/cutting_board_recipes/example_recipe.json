@@ -1,0 +1,13 @@
+{
+  "comment": "This file is an example for a future update. It is not currently used.",
+  "type": "cutting_board_recipe",
+  "ingredients": [
+      "minecraft:dried_kelp",
+      "minecraft:cooked_cod",
+      "minecraft:oak_log"
+  ],
+  "result": {
+    "item": "minecraft:dirt",
+    "count": 1
+  }
+}
