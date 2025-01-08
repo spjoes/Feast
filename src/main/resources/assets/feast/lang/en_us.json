@@ -6,8 +6,12 @@
   "item.feast.cutting_board": "Cutting Board",
   "item.feast.stove": "Stove",
   "item.feast.stove_pot": "Stove Pot",
+  "item.feast.spice_rack": "Spice Rack",
   "block.feast.rice_crop": "Rice Patty",
+  "block.feast.spice_rack": "Spice Rack",
   "block.feast.cutting_board": "Cutting Board",
   "block.feast.stove": "Stove",
-  "entity.minecraft.villager.faraway_traveler": "Faraway Traveler"
+  "entity.minecraft.villager.faraway_traveler": "Faraway Traveler",
+  "tooltip.feast.has_water.full": "Full of water",
+  "tooltip.feast.has_water.empty": "Empty"
 }

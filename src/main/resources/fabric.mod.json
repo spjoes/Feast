@@ -16,13 +16,13 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"dev.persn.Feast"
+			"dev.persn.feast.Feast"
 		],
 		"fabric-datagen": [
-			"dev.persn.FeastDataGenerator"
+			"dev.persn.feast.data.ModClientDataGenerator"
 		],
 		"client": [
-			"dev.persn.FeastClient"
+			"dev.persn.feast.FeastClient"
 		]
 	},
 	"mixins": [

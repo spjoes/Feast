@@ -1,6 +1,6 @@
 {
 	"required": true,
-	"package": "dev.persn.mixin",
+	"package": "dev.persn.feast.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [],
 	"injectors": {

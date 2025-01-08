@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "feast:block/spice_rack",
+      "y": 270
+    },
+    "facing=north": {
+      "model": "feast:block/spice_rack",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "feast:block/spice_rack"
+    },
+    "facing=west": {
+      "model": "feast:block/spice_rack",
+      "y": 90
+    }
+  }
+}

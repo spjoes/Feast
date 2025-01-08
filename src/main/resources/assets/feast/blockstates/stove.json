@@ -1,19 +1,19 @@
 {
   "variants": {
     "facing=east": {
-      "model": "feast:block/stove2",
+      "model": "feast:block/stove",
       "y": 180
     },
     "facing=north": {
-      "model": "feast:block/stove2",
+      "model": "feast:block/stove",
       "y": 90
     },
     "facing=south": {
-      "model": "feast:block/stove2",
+      "model": "feast:block/stove",
       "y": 270
     },
     "facing=west": {
-      "model": "feast:block/stove2"
+      "model": "feast:block/stove"
     }
   }
 }

@@ -1,0 +1,20 @@
+{
+  "model": {
+    "type": "minecraft:condition",
+    "on_false": {
+      "type": "minecraft:model",
+      "model": "feast:item/stove_pot"
+    },
+    "on_true": {
+      "type": "minecraft:model",
+      "model": "feast:item/stove_pot_filled",
+      "tints": [
+        {
+          "type": "minecraft:potion",
+          "default": -13083194
+        }
+      ]
+    },
+    "property": "feast:has_water"
+  }
+}

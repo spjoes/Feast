@@ -1,6 +1,6 @@
 {
 	"required": true,
-	"package": "dev.persn.mixin.client",
+	"package": "dev.persn.feast.mixin.client",
 	"compatibilityLevel": "JAVA_21",
 	"client": [
 		"HeldItemRendererMixin"
