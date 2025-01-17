@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "X": "#minecraft:wooden_slabs"
+  },
+  "pattern": [
+    "   ",
+    "   ",
+    "XXX"
+  ],
+  "result": {
+    "count": 1,
+    "id": "feast:cutting_board"
+  }
+}
