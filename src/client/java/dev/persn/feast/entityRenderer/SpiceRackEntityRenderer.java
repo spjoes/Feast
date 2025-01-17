@@ -31,13 +31,13 @@ public class SpiceRackEntityRenderer implements BlockEntityRenderer<SpiceRackEnt
             //down scale
             matrices.scale(0.5f, 0.5f, 0.5f);
 
-            // Move the item
-            matrices.translate(1.0, 0.15 + (0.025*i), 0.85 + (0.025* (i % 4)));
+            //row should be 1 for the first 3 items and 2 for the next 3
+            int row = i < 3 ? 1 : 2;
+            double paddingBetweenRows = -0.875;
 
-            //Make item lay flat
-            matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(90));
+            //this but the x value needs to "reset" after 3 items
+            matrices.translate(1.4 - (0.45*(i % 3)), 1.225 + (paddingBetweenRows * (row - 1)), 1.65f);
 
-            matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(50 * (i % 4)));
 
             int lightAbove = WorldRenderer.getLightmapCoordinates(blockEntity.getWorld(), blockEntity.getPos().up());
 

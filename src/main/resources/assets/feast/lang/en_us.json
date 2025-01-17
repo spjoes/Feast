@@ -13,5 +13,8 @@
   "block.feast.stove": "Stove",
   "entity.minecraft.villager.faraway_traveler": "Faraway Traveler",
   "tooltip.feast.has_water.full": "Full of water",
-  "tooltip.feast.has_water.empty": "Empty"
+  "tooltip.feast.has_water.empty": "Empty",
+  "tooltip.feast.ingredients": "Ingredients",
+  "tooltip.feast.no_ingredients": "None",
+  "category.feast.cutting_board": "Cutting Board"
 }

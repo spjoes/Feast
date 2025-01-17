@@ -23,6 +23,9 @@
 		],
 		"client": [
 			"dev.persn.feast.FeastClient"
+		],
+		"rei_client": [
+			"dev.persn.feast.integrations.FeastREIClientPlugin"
 		]
 	},
 	"mixins": [

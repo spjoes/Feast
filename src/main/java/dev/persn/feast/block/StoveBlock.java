@@ -2,6 +2,7 @@ package dev.persn.feast.block;
 
 import com.mojang.serialization.MapCodec;
 import dev.persn.feast.Feast;
+import dev.persn.feast.block.entity.SpiceRackEntity;
 import dev.persn.feast.block.entity.StoveEntity;
 import dev.persn.feast.item.ModItems;
 import net.minecraft.block.*;
@@ -15,6 +16,7 @@ import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Property;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.BlockRotation;
+import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.function.BooleanBiFunction;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -61,10 +63,8 @@ public class StoveBlock extends BlockWithEntity {
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof StoveEntity stoveBlockEntity) {
                 Feast.LOGGER.info("Stove block entity found");
-                if(player.getMainHandStack().getItem() == ModItems.STOVE_POT) {
-                    Feast.LOGGER.info("Player has stove pot");
-                    stoveBlockEntity.inventory.set(0, player.getMainHandStack());
-                    Feast.LOGGER.info("Stove block entity inventory set");
+                if(player.getMainHandStack().getItem() == ModItems.STOVE_POT && stoveBlockEntity.getInventory().isEmpty()) {
+                    stoveBlockEntity.getInventory().setStack(0, player.getMainHandStack().copy());
                     if(!player.getAbilities().creativeMode) player.getMainHandStack().decrement(1);
 
 
@@ -75,6 +75,19 @@ public class StoveBlock extends BlockWithEntity {
             }
         }
         return ActionResult.SUCCESS;
+    }
+
+    @Override
+    protected void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
+        if (state.hasBlockEntity() && !state.isOf(newState.getBlock())) {
+            BlockEntity blockEntity = world.getBlockEntity(pos);
+            if(blockEntity instanceof StoveEntity stoveEntity) {
+                ItemScatterer.spawn(world, pos, stoveEntity.getInventory());
+                world.updateComparators(pos, this);
+                world.removeBlockEntity(pos);
+            }
+            super.onStateReplaced(state, world, pos, newState, moved);
+        }
     }
 
     public static final VoxelShape WEST_SHAPE = Stream.of(

@@ -42,11 +42,11 @@ public class StoveEntityRenderer implements BlockEntityRenderer<StoveEntity> {
         ItemStack stack;
 
         //check item components
-        if(Boolean.TRUE.equals(blockEntity.inventory.getFirst().get(ModComponents.HAS_WATER))) {
+        if(Boolean.TRUE.equals(blockEntity.getInventory().getStack(0).get(ModComponents.HAS_WATER))) {
 //            Feast.LOGGER.info(blockEntity.inventory.getFirst().getItem().getComponents().toString());
-            stack = new ItemStack(blockEntity.inventory.getFirst().getItem());
+            stack = new ItemStack(blockEntity.getInventory().getStack(0).getItem());
         } else {
-            stack = new ItemStack(blockEntity.inventory.getFirst().getItem());
+            stack = new ItemStack(blockEntity.getInventory().getStack(0).getItem());
         }
 
 

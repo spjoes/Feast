@@ -2,6 +2,7 @@ package dev.persn.feast.gui;
 
 import dev.persn.feast.Feast;
 import dev.persn.feast.block.entity.SpiceRackEntity;
+import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -10,40 +11,13 @@ import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class SpiceRackScreenHandler extends ScreenHandler {
 
     private final Inventory inventory;
-
-    public SpiceRackScreenHandler(int syncId, PlayerInventory playerInventory, SpiceRackEntity blockEntity) {
-        super(Feast.SPICE_RACK_SCREEN_HANDLER, syncId);
-        this.inventory = blockEntity.getInventory();
-
-        // Standard slot setup
-        checkSize(inventory, 6);
-        inventory.onOpen(playerInventory.player);
-
-        // Spice Rack's own 6 slots
-        for (int m = 0; m < 2; ++m) {
-            for (int l = 0; l < 3; ++l) {
-                this.addSlot(new Slot(inventory, l + m * 3, 62 + l * 18, 17 + m * 18));
-            }
-        }
-
-        // Player Inventory (3 rows)
-        for (int row = 0; row < 3; ++row) {
-            for (int col = 0; col < 9; ++col) {
-                this.addSlot(new Slot(playerInventory, col + row * 9 + 9, 8 + col * 18, 84 + row * 18));
-            }
-        }
-
-        // Player Hotbar
-        for (int hotbarSlot = 0; hotbarSlot < 9; ++hotbarSlot) {
-            this.addSlot(new Slot(playerInventory, hotbarSlot, 8 + hotbarSlot * 18, 142));
-        }
-    }
 
     public SpiceRackScreenHandler(int syncId, PlayerInventory playerInv, BlockPos pos) {
         super(Feast.SPICE_RACK_SCREEN_HANDLER, syncId);
@@ -71,10 +45,11 @@ public class SpiceRackScreenHandler extends ScreenHandler {
         checkSize(inventory, 6);
         inventory.onOpen(playerInv.player);
 
-        // Spice Rack's own 6 slots
-        for (int m = 0; m < 2; ++m) {
-            for (int l = 0; l < 3; ++l) {
-                this.addSlot(new Slot(this.inventory, l + m * 3, 62 + l * 18, 17 + m * 18));
+        // Spice Rack's own 6 slots but with a customizable padding in between the 1st and 2nd row on the y axis
+        int padding = 13;
+        for (int row = 0; row < 2; ++row) {
+            for (int col = 0; col < 3; ++col) {
+                this.addSlot(new Slot(inventory, col + row * 3, 62 + col * 18, 32 + row * 18 + ((row - 1) * padding)));
             }
         }
 

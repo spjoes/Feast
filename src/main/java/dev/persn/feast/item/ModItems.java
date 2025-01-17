@@ -41,7 +41,9 @@ public class ModItems {
     public static final Item SUSHI_ITEM = registerItem("sushi", Item::new, new Item.Settings().food(SUSHI_FOOD_COMPONENT));
     public static final Item SHRIMP_ITEM = registerItem("shrimp", Item::new, new Item.Settings().food(SHRIMP_FOOD_COMPONENT));
     public static final Item COOKED_SHRIMP_ITEM = registerItem("cooked_shrimp", Item::new, new Item.Settings().food(COOKED_SHRIMP_FOOD_COMPONENT));
-    public static final Item STOVE_POT = registerItem("stove_pot", StovePotItem::new, new Item.Settings().component(ModComponents.HAS_WATER, false).component(ModComponents.INGREDIENTS, List.of(Items.COOKED_COD.getDefaultStack())));
+    public static final Item STOVE_POT = registerItem("stove_pot", StovePotItem::new, new Item.Settings()
+            .component(ModComponents.HAS_WATER, false)
+            .component(ModComponents.INGREDIENTS, List.of()));
 
     //Block Items
     public static final Item RICE_CROP_ITEM = registerItem("rice_crop", settings -> new BlockItem(ModBlocks.RICE_CROP, settings), new Item.Settings().food(RICE_FOOD_COMPONENT));

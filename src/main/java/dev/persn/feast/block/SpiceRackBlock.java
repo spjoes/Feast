@@ -39,9 +39,7 @@ public class SpiceRackBlock extends BlockWithEntity {
     }
 
     @Override
-    protected MapCodec<? extends SpiceRackBlock> getCodec() {
-        return createCodec(SpiceRackBlock::new);
-    }
+    protected MapCodec<? extends SpiceRackBlock> getCodec() { return createCodec(SpiceRackBlock::new); }
 
     @Override
     public @Nullable BlockState getPlacementState(ItemPlacementContext ctx) {
@@ -71,15 +69,17 @@ public class SpiceRackBlock extends BlockWithEntity {
 
     @Override
     protected void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
-        if(state.getBlock() != newState.getBlock()) {
+        if (state.hasBlockEntity() && !state.isOf(newState.getBlock())) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if(blockEntity instanceof SpiceRackEntity spiceRackEntity) {
-                ItemScatterer.spawn(world, pos, (Inventory) blockEntity);
+                ItemScatterer.spawn(world, pos, spiceRackEntity.getInventory());
                 world.updateComparators(pos, this);
+                world.removeBlockEntity(pos);
             }
             super.onStateReplaced(state, world, pos, newState, moved);
         }
     }
+
 
     @Override
     protected boolean hasComparatorOutput(BlockState state) {
@@ -158,7 +158,7 @@ public class SpiceRackBlock extends BlockWithEntity {
     }
 
     @Override
-    protected BlockRenderType getRenderType(BlockState state) {
+    public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.MODEL;
     }
 }

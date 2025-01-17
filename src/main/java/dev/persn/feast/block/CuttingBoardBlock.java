@@ -1,13 +1,16 @@
 package dev.persn.feast.block;
 
 import com.mojang.serialization.MapCodec;
+import dev.persn.feast.Feast;
 import dev.persn.feast.block.entity.CuttingBoardEntity;
+import dev.persn.feast.block.entity.SpiceRackEntity;
 import dev.persn.feast.item.ModItems;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
@@ -18,6 +21,7 @@ import net.minecraft.state.property.Property;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.BlockRotation;
+import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.function.BooleanBiFunction;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -74,7 +78,7 @@ public class CuttingBoardBlock extends BlockWithEntity {
                     // 2) Compare with our single recipe: kelp + cod + log -> dirt
                     Map<Item, Integer> requiredItems = new HashMap<>();
                     requiredItems.put(Items.DRIED_KELP, 1);
-                    requiredItems.put(Items.COOKED_COD, 1);
+                    requiredItems.put(Items.COD, 1);
                     requiredItems.put(ModItems.RICE_CROP_ITEM, 1);
 
                     // 3) Check if board matches the recipe exactly
@@ -96,7 +100,13 @@ public class CuttingBoardBlock extends BlockWithEntity {
                     // NORMAL RIGHT-CLICK --> Place item
                 } else {
                     // If no item in hand, do nothing
-                    if (player.getMainHandStack().isEmpty()) return ActionResult.SUCCESS;
+                    if (player.getMainHandStack().isEmpty()) {
+                        ItemScatterer.spawn(world, pos, cuttingBoardBlockEntity.getInventory());
+                        clearBoard(cuttingBoardBlockEntity);
+                        cuttingBoardBlockEntity.markDirty();
+                        world.updateListeners(pos, state, state, 3);
+                        return ActionResult.SUCCESS;
+                    }
 
 
                     // Place the item on the board
@@ -156,11 +166,26 @@ public class CuttingBoardBlock extends BlockWithEntity {
         return true;
     }
 
+    @Override
+    protected void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
+        if (state.hasBlockEntity() && !state.isOf(newState.getBlock())) {
+            BlockEntity blockEntity = world.getBlockEntity(pos);
+            if(blockEntity instanceof CuttingBoardEntity cuttingBoardEntity) {
+                ItemScatterer.spawn(world, pos, cuttingBoardEntity.getInventory());
+                world.updateComparators(pos, this);
+                world.removeBlockEntity(pos);
+            }
+            super.onStateReplaced(state, world, pos, newState, moved);
+        }
+    }
+
     private void clearBoard(CuttingBoardEntity boardEntity) {
+
         // Clear the entire inventory
         for (int i = 0; i < boardEntity.inventory.size(); i++) {
             boardEntity.inventory.set(i, ItemStack.EMPTY);
         }
+
         boardEntity.number = 0; // reset the "next index"
         boardEntity.markDirty();
     }

@@ -36,7 +36,7 @@ public class SpiceRackEntity extends BlockEntity implements ExtendedScreenHandle
     public SpiceRackEntity(BlockPos pos, BlockState state) {
         super(ModBlocks.SPICE_RACK_ENTITY, pos, state);
         inventory.addListener(sender -> {
-            if (!world.isClient()) Feast.LOGGER.info("markDirty called; new stack[0] = {}", inventory.getStack(0));
+//            if (!world.isClient()) Feast.LOGGER.info("markDirty called; new stack[0] = {}", inventory.getStack(0));
             markDirty();
         });
     }

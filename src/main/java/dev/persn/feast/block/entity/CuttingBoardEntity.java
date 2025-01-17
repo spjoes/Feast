@@ -35,6 +35,10 @@ public class CuttingBoardEntity extends BlockEntity {
     }
 
 
+    public DefaultedList<ItemStack> getInventory() {
+        return inventory;
+    }
+
     @Override
     protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
         super.writeNbt(nbt, registries);

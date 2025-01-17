@@ -44,12 +44,15 @@ public class StovePotItem extends Item {
             }
 
             if (world.getFluidState(blockPos).isIn(FluidTags.WATER)) {
-                Feast.LOGGER.info("Water detected");
                 world.playSound(user, user.getX(), user.getY(), user.getZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
                 world.emitGameEvent(user, GameEvent.FLUID_PICKUP, blockPos);
+
                 ItemStack stack = user.getStackInHand(hand);
-                stack.set(ModComponents.HAS_WATER, true);
-                Feast.LOGGER.info("Water added");
+                ItemStack newStack = new ItemStack(stack.getItem());
+                newStack.set(ModComponents.HAS_WATER, true);
+                user.giveOrDropStack(newStack);
+                stack.decrementUnlessCreative(1, user);
+
                 return ActionResult.SUCCESS;
             }
         }
@@ -63,13 +66,9 @@ public class StovePotItem extends Item {
         if (!ingredients.isEmpty()) {
             tooltip.add(Text.translatable("tooltip.feast.ingredients").formatted(Formatting.GRAY));
             for (ItemStack ingredient : ingredients) {
-                tooltip.add(Text.literal(String.valueOf(ingredient.getItemName())).formatted(Formatting.GRAY));
+                tooltip.add(Text.literal("  " + ingredient.getName().getString()).formatted(Formatting.GRAY));
             }
         }
-
-
-
-
         tooltip.add(has_water ? Text.translatable("tooltip.feast.has_water.full").formatted(Formatting.GREEN) : Text.translatable("tooltip.feast.has_water.empty").formatted(Formatting.RED));
     }
 }
