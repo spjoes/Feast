@@ -26,8 +26,6 @@ public class StoveEntityRenderer implements BlockEntityRenderer<StoveEntity> {
     @Override
     public void render(StoveEntity blockEntity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
         matrices.push();
-        // Calculate the current offset in the y value
-        double offset = Math.sin((blockEntity.getWorld().getTime() + tickDelta) / 8.0) / 4.0;
 
         matrices.scale(3.0f, 3.0f, 3.0f);
 
@@ -35,7 +33,9 @@ public class StoveEntityRenderer implements BlockEntityRenderer<StoveEntity> {
         matrices.translate((0.5 / 3), (0.8 / 3), (0.5 / 3));
 
         // Rotate the item
-        matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees((blockEntity.getWorld().getTime() + tickDelta) * 2));
+        if(!blockEntity.isBurning) {
+            matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees((blockEntity.getWorld().getTime() + tickDelta) * 2));
+        }
 
         int lightAbove = WorldRenderer.getLightmapCoordinates(blockEntity.getWorld(), blockEntity.getPos().up());
 

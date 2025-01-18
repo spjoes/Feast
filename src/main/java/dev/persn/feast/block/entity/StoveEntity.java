@@ -21,6 +21,8 @@ import org.jetbrains.annotations.Nullable;
 
 public class StoveEntity extends BlockEntity {
 
+
+    public boolean isBurning = false;
     protected final SimpleInventory inventory = new SimpleInventory(1) {
         @Override
         public int getMaxCountPerStack() {
@@ -55,15 +57,18 @@ public class StoveEntity extends BlockEntity {
     }
 
 
+
     @Override
     protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
         super.readNbt(nbt, registries);
+        isBurning = nbt.getBoolean("isBurning");
         Inventories.readNbt(nbt, inventory.getHeldStacks(), registries);
     }
 
     @Override
     protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
         super.writeNbt(nbt, registries);
+        nbt.putBoolean("isBurning", isBurning);
         Inventories.writeNbt(nbt, inventory.getHeldStacks(), registries);
     }
 

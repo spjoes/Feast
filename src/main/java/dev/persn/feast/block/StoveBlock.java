@@ -11,6 +11,9 @@ import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.particle.ParticleTypes;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Property;
@@ -21,6 +24,7 @@ import net.minecraft.util.function.BooleanBiFunction;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
@@ -71,6 +75,12 @@ public class StoveBlock extends BlockWithEntity {
                     stoveBlockEntity.markDirty();
                     world.updateListeners(pos, state, state, 0);
                     return ActionResult.SUCCESS;
+                } else {
+                    ((StoveEntity) blockEntity).isBurning = !((StoveEntity) blockEntity).isBurning;
+                    Feast.LOGGER.info(String.valueOf(((StoveEntity) blockEntity).isBurning));
+                    world.updateListeners(pos, state, state, 0);
+                    blockEntity.markDirty();
+                    return ActionResult.SUCCESS;
                 }
             }
         }
@@ -87,6 +97,29 @@ public class StoveBlock extends BlockWithEntity {
                 world.removeBlockEntity(pos);
             }
             super.onStateReplaced(state, world, pos, newState, moved);
+        }
+    }
+
+    @Override
+    public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
+        BlockEntity blockEntity = world.getBlockEntity(pos);
+        if(blockEntity instanceof StoveEntity stoveEntity) {
+            Feast.LOGGER.info(String.valueOf(stoveEntity.isBurning));
+            if(stoveEntity.isBurning) {
+                double d = (double)pos.getX() + 1.0D;
+                double e = (double)pos.getY() + 0.8D;
+                double f = (double)pos.getZ() + 0.5D;
+                if (random.nextDouble() < 0.1D) {
+                    world.playSound(d, e, f, SoundEvents.BLOCK_CAMPFIRE_CRACKLE, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
+                }
+                Direction direction = state.get(FACING);
+                Direction.Axis axis = direction.getAxis();
+                double g = random.nextDouble() * 0.6D - 0.3D;
+                double h = axis == Direction.Axis.X ? (double)direction.getOffsetX() * 0.52D : g;
+                double i = random.nextDouble() * 6.0D / 16.0D;
+                double j = axis == Direction.Axis.Z ? (double)direction.getOffsetZ() * 0.52D : g;
+                world.addParticle(ParticleTypes.FLAME, d + h, e + i, f + j, 0.0D, 0.0D, 0.0D);
+            }
         }
     }
 
